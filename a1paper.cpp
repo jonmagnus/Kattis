@@ -8,15 +8,14 @@ typedef long long ll;
 int N, c[MAX_N];
 double tape_len, zero_len = pow(2,-(double)1./4.);
 
-void create(int s)
+void create(int s, int n)
 {
 	//fprintf(stderr, "c[%d]=%d\n", s,c[s]);
-	int need = 2 - c[s];
-	for (int i = 0; i < need; i++)
-		create(s + 1);
-	c[s] -= 2;
-	c[s - 1]++;
-	tape_len += zero_len*pow(2.,-(double)s/2);
+	int need = 2*n - c[s];
+	if (need > 0) create(s + 1, need);
+	c[s] -= 2*n;
+	c[s - 1] += n;
+	tape_len += n*zero_len*pow(2.,-(double)s/2);
 }
 
 int main()
@@ -31,7 +30,7 @@ int main()
 		c[0] = 0;
 		if (mask >= (1LL << N)) 
 		{
-			create(1);
+			create(1,1);
 			printf("%.11lf\n", tape_len);
 		}
 		else printf("impossible\n");

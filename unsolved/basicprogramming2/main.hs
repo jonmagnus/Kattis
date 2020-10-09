@@ -40,5 +40,6 @@ solve [[n, t], a]
   | t == 2 = if (unique (-1) sa) then "Unique" else "Contains duplicate"
   | t == 3 = show $ findMajority sa n 1
   | t == 4 = unwords $ (map show) $ findMedians sa n 1
+  | t == 5 = unwords $ (map show) $ filter (\x -> x >= 100 && x <= 999) sa
   where 
     sa = sort a

@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #define MAX_N 1000003
 
 int left[2*MAX_N], right[2*MAX_N];
@@ -16,36 +17,42 @@ int get_(int i) {
     return right[rstart + i + lstart - lend];
 }
 
-void content() {
-    int i;
-    printf("left: ");
-    for (i = lstart; i < lend; i++) printf("%d ", left[i]);
-    printf("\nright: ");
-    for (i = rstart; i < rend; i++) printf("%d ", right[i]);
-    printf("\n");
+void fastprint(int i) {
+    int count = 0;
+    char buffer[20];
+    while (i) {
+        buffer[count++] = '0' + (i % 10);
+        i /= 10;
+    }
+    while (count--) putchar_unlocked(buffer[count]);
+    putchar_unlocked('\n');
 }
 
 int main() {
+    int n, v;
+    char buffer[30];
     lstart = lend = rstart = rend = MAX_N;
-    int n;
-    scanf("%d ", &n);
+    fgets(buffer, 30, stdin);
+    n = atoi(buffer);
     while (n--) {
-        char cmd[20];
-        cmd[5] = 0;
-        int v;
-        scanf("%s %d ", cmd, &v);
-        switch (cmd[5]) {
+        buffer[5] = 0;
+        fgets(buffer, 30, stdin);
+        switch (buffer[5]) {
         case 'b':
+                v = atoi(buffer + 10);
                 push_back(v);
                 break;
             case 'f':
+                v = atoi(buffer + 11);
                 push_front(v);
                 break;
             case 'm':
+                v = atoi(buffer + 12);
                 push_middle(v);
                 break;
-            case 0:
-                printf("%d\n", get_(v));
+            default:
+                v = atoi(buffer + 3);
+                fastprint(get_(v));
                 break;
         }
     }
